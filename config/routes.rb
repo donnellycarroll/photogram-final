@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   # Routes for the Like resource:
 
   # CREATE
@@ -83,5 +85,7 @@ Rails.application.routes.draw do
 
   root "photos#index"
   # shortcut for: get "/", :controller => "photos", :action => "index"
+  
+  get("/users", { :controller => "users", :action => "index"  })
 
 end
