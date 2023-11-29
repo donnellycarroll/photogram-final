@@ -25,4 +25,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many :posts, class_name: "Photo", foreign_key: "owner_id", dependent: :destroy
+  has_many  :comments, class_name: "Comment", foreign_key: "author_id", dependent: :destroy
+  has_many  :relationships, class_name: "FollowRequest", foreign_key: "sender_id", dependent: :destroy
+  has_many  :requesters, class_name: "FollowRequest", foreign_key: "recipient_id", dependent: :destroy
+  #has_many  :likes, class_name: "Like", foreign_key: "fan_id", dependent: :destroy
+
+  has_many :followers, through: :relationships, source: :follower
+  has_many :followings, through: :requesters, source: :requester
+  has_many :feed, through: :followings, source: :posts
+
 end
