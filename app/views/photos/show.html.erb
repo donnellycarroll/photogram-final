@@ -67,7 +67,7 @@
       </dt>
       <dd>
         <% @the_photo.likes.each do |a_like| %>
-        <%=a_like%>,
+        <%=a_like.fan.username%>,
         <%end%>
       </dd>
 
