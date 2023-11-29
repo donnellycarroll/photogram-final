@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
     <div>
@@ -60,6 +60,15 @@
       </dt>
       <dd>
         <%= @the_photo.likes_count %>
+      </dd>
+
+      <dt>
+        Fans
+      </dt>
+      <dd>
+        <% @the_photo.likes.each do |a_like| %>
+        <%=a_like%>,
+        <%end%>
       </dd>
 
       <dt>
