@@ -19,18 +19,12 @@
     </div>
 
     <dl>
-      <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_photo.owner_id %>
-      </dd>
 
       <dt>
         Image
       </dt>
       <dd>
-        <%= @the_photo.image %>
+       <img src="<%= @the_photo.image %>">
       </dd>
 
       <dt>
@@ -38,6 +32,20 @@
       </dt>
       <dd>
         <%= @the_photo.caption %>
+      </dd>
+
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @the_photo.user.username %>
+      </dd>
+
+      <dt>
+        Posted
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_photo.created_at) %> ago
       </dd>
 
       <dt>
@@ -52,13 +60,6 @@
       </dt>
       <dd>
         <%= @the_photo.likes_count %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.created_at) %> ago
       </dd>
 
       <dt>
