@@ -4,19 +4,14 @@
       Photo details
     </h1>
 
-    <div>
-      <div>
-        <a href="/photos">
-          Go back
-        </a>
-      </div>
+    <% if current_user.id == @the_photo.owner_id%>
 
       <div>
         <a href="/delete_photo/<%= @the_photo.id %>">
           Delete photo
         </a>
       </div>
-    </div>
+    <%end%>
 
     <dl>
 
@@ -96,24 +91,27 @@
     <th>Posted</th>
   </tr>
 
-<% @the_photo.comments.each do |a_comment| %>
-          
-  <tr>
-    <td>
-      <%=a_comment.viewer_user.username%>
-    </td>
+  <% @the_photo.comments.each do |a_comment| %>
 
-    <td>
-      <%=a_comment.body%>
-    </td>
+    <tr>
+      <td>
+        <%=a_comment.viewer_user.username%>
+      </td>
 
-    <td>
-      <%= time_ago_in_words(a_comment.created_at) %> ago
-    </td>
-  </tr>
+      <td>
+        <%=a_comment.body%>
+      </td>
+
+      <td>
+        <%= time_ago_in_words(a_comment.created_at) %> ago 
+      </td>
+    </tr>
 
   <%end%>
 </table>
+
+    <% if current_user.id == @the_photo.owner_id%>
+
 
 <div>
   <div>
@@ -169,4 +167,20 @@
   </div>
 </div>
 
+<% else %>
+<h3>Add a new comment</h3>
+
+<form action="/insert_comment" method="post">
+  <input type="hidden" value="<%=@the_photo.id%>" name="query_photo_id">
+
+  <input type="hidden" value="<%=current_user.id%>" name="query_author_id">
+  
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..."></textarea>
+
+  <button>Add comment</button>
+</form>
+
+
+    <%end%>
 <hr>
