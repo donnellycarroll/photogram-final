@@ -33,7 +33,7 @@
 
         <td>
           <% unless current_user.nil? || FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0) %>
-          <%=FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0)%>
+            <%=FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0)%>
 
             <form action="/insert_follow_request" method="post">
               <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
@@ -42,30 +42,40 @@
 
               <button>Follow</button>
             </form>
+          <%end%>
 
-          <%else%>
+          <%if FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).nil? %>
+          <%elsif FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).status == "pending"%>
 
-            <% the_id = current_user.id %>
+            <%# the_id = current_user.id %>
+            <!---->
+            <%# mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
+            <%# the_request = mathcing_requests.where(:recipient_id => a_user.id) %>
+            <!--
 
-            <% mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
-            <% the_request = mathcing_requests.where(:recipient_id => a_user.id) %>
+              <%#this_request = the_request.at(0) %>-->
 
-            <% if the_request == nil %>
-            <%else%>
-              <%this_request = the_request.at(0) %>
-              <% if this_request == nil %>
-              <%else%>
-                <%=this_request.status%>
-              <%end%>
-            <%end%>
+            Request sent.
+
+            <a href="/delete_follow_request/<%=a_user.id%>">
+              Cancel
+            </a>
+
+          <%elsif %>
+
+            <a href="/delete_follow_request/<%=a_user.id%>">
+              Unfollow
+            </a>
 
           <%end%>
+
         </td>
+   
+      <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
 
-        <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
-
-      </tr>
-    <%end%>
+    </tr>
+<%end%>
   </table>
+
 
 </div>

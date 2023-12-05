@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  root "photos#index"
+  root "users#index"
   # shortcut for: get "/", :controller => "photos", :action => "index"
   
   get("/users", { :controller => "users", :action => "index"  })
