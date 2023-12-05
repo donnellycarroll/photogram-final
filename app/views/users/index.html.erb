@@ -6,10 +6,6 @@
   </div>
 </div>
 
-<%= the_id = current_user.id %>
-
-<%= mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
-
 <div>
   <table border="1">
     <tr>
@@ -36,9 +32,19 @@
         </td>
 
         <td>
-          <% if current_user == nil %>
+          <% unless current_user.nil? || FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0) %>
+          <%=FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0)%>
+
+            <form action="/insert_follow_request" method="post">
+              <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+              <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+              <input type="hidden" name="query_status" value="pending">
+
+              <button>Follow</button>
+            </form>
 
           <%else%>
+
             <% the_id = current_user.id %>
 
             <% mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
