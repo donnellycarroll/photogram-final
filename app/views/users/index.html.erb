@@ -44,38 +44,38 @@
             </form>
           <%end%>
 
-          <%if FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).nil? %>
-          <%elsif FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).status == "pending"%>
+          <% if current_user %>
+            <%if FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).nil? %>
+            <%elsif FollowRequest.where(:sender_id => current_user.id, :recipient_id => a_user.id).at(0).status == "pending"%>
 
-            <%# the_id = current_user.id %>
-            <!---->
-            <%# mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
-            <%# the_request = mathcing_requests.where(:recipient_id => a_user.id) %>
-            <!--
+              <%# the_id = current_user.id %>
+              <!---->
+              <%# mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
+              <%# the_request = mathcing_requests.where(:recipient_id => a_user.id) %>
+              <!--
 
               <%#this_request = the_request.at(0) %>-->
 
-            Request sent.
+              Request sent.
 
-            <a href="/delete_follow_request/<%=a_user.id%>">
-              Cancel
-            </a>
+              <a href="/delete_follow_request/<%=a_user.id%>">
+                Cancel
+              </a>
 
-          <%elsif %>
+            <%elsif %>
 
-            <a href="/delete_follow_request/<%=a_user.id%>">
-              Unfollow
-            </a>
+              <a href="/delete_follow_request/<%=a_user.id%>">
+                Unfollow
+              </a>
 
+            <%end%>
           <%end%>
-
         </td>
-   
-      <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
 
-    </tr>
-<%end%>
+        <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
+
+      </tr>
+    <%end%>
   </table>
-
 
 </div>
