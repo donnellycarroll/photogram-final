@@ -1,41 +1,65 @@
 <div>
   <div>
     <h1>
-      List of all photos
+      List of all users
     </h1>
   </div>
 </div>
 
-<%= params%>
+<%= the_id = current_user.id %>
 
+<%= mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
 
-<table border="1">
-  <tr>
-    <th>Username</th>
+<div>
+  <table border="1">
+    <tr>
+      <th>Username</th>
 
-    <th>Private? </th>
+      <th>Private? </th>
 
-    <th></th>
+      <th></th>
 
-    <th></th>
-    
-  </tr>
+      <th></th>
 
+    </tr>
 
-<%=matching_follow_requests = FollowRequest.where({ :sender_id => current_user.id })%>
+    <% @list_of_users.each do |a_user|%>
+      <tr>
+        <td><%= a_user.username%></td>
 
+        <td>
+          <% if a_user.private == true%>
+            Yes
+          <%else%>
+            No
+          <%end%>
+        </td>
 
-<% @list_of_users.each do |a_user|%>
-  <tr>
-    <td><%= a_user.username%></td>
+        <td>
+          <% if current_user == nil %>
 
-    <td> <%= a_user.private%></td>
+          <%else%>
+            <% the_id = current_user.id %>
 
-    
-    <!--<td><%#= @follow_requests.where(:sender_id == a_user.id)%></td>-->
+            <% mathcing_requests = FollowRequest.where(:sender_id => the_id) %>
+            <% the_request = mathcing_requests.where(:recipient_id => a_user.id) %>
 
-    <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
+            <% if the_request == nil %>
+            <%else%>
+              <%this_request = the_request.at(0) %>
+              <% if this_request == nil %>
+              <%else%>
+                <%=this_request.status%>
+              <%end%>
+            <%end%>
 
-  </tr>
-<%end%>
-</table>
+          <%end%>
+        </td>
+
+        <td> <a href="/users/<%= a_user.username%>">Show details</a> </td>
+
+      </tr>
+    <%end%>
+  </table>
+
+</div>
